@@ -1,0 +1,102 @@
+body {
+    font-family: 'Fondamento', cursive;
+    padding: 1em;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.weekdays {
+    display: inline-block;
+    margin-left: 32%;
+}
+
+.reset {
+    text-align: center;
+    margin-left: 32%;
+}
+
+.dayStyle {
+    border: 1px solid black;
+    /* display: inline-block; */
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+/* h2 {
+        text-align: center;
+    } */
+
+.cafe-name {
+    color: rosybrown;
+    font-family: 'Playfair Display', serif;
+}
+
+.home-page {
+    text-align: center;
+    border: rebeccapurple solid 1px;
+    padding: 1em;
+    /* background-color: black; */
+}
+
+.homeBtn {
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+.index {
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+.purple {
+    background-color: rebeccapurple;
+}
+
+.container {
+    border: black dotted 1px;
+    text-align: center;
+}
+
+.top {
+    text-align: center;
+    margin: 1em;
+}
+
+.fa {
+    margin: 0.5em;
+}
+
+.btn-admin {
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.admin-btn {
+    text-align: center;
+}
+
+.box {
+    border: black 1px dashed;
+    display: inline-block;
+}
+
+table {
+    width: 100%;
+}

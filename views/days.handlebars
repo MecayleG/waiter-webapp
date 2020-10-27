@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{!-- <title>Document</title> --}}
+</head>
+
+<body>
+  <div class="top">
+    <h2>Schedule for week 43</h2>
+    <i class="fa fa-cloud" style="font-size:15px;color:green;">3 waiters</i>
+    <i class="fa fa-cloud" style="font-size:15px;color:red;">less than 3 waiters</i>
+    <i class="fa fa-cloud" style="font-size:15px;color:rebeccapurple;">More than 3 waiters</i>
+  </div>
+  <table>
+  <tr>
+    <th>Day</th>
+  </tr>
+  <tr>
+    {{#each day}}
+    <td class="{{this.color}}">{{this.days}}</td>
+    {{/each}}
+  </tr>
+</table>
+  {{!-- <table>
+  <tr>
+    <th>Waiter Names</th>
+  </tr>
+  <tr>
+    {{#each name}}
+    <td class="">{{this.names}}</td>
+    {{/each}}
+  </tr>
+</table> --}}
+
+
+    {{!-- <div class="weekdays">
+      {{#each day}}
+      <li class="dayStyle {{this.color}}">{{this.days}}</li>
+      {{/each}}
+    </div>
+  <div class="box">
+    {{#each name}}
+    <li>{{this.names}}</li>
+    {{/each}}
+  </div> --}}
+  <br>
+  <div class="admin-btn">
+    <button class="btn-admin" name="link"><a href="/reset">Reset Week</a></button>
+    <button class="btn-admin"><a href="/">Take me home</a></button>
+
+  </div>
+</body>
+
+</html>
