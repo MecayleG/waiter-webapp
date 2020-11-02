@@ -8,14 +8,22 @@
 
 <body>
   <div class='container'>
+        <div class="home-page">
+        <h1 class="cafe-name">Jah's Café</h1>
+                <span>Live | Love | Laugh</span>
+
+    </div>
+
     <h1>Waiter Schedule</h1>
-    <span>Please enter your name in url e.g. waiters/yourname</span>
 
     {{#each name}}
     <form action="/waiters/{{this.user}}" method="POST">
       <h2 class="name" <a href="/waiters/{{this.user}}"> Hello {{this.user}}</a></h2>
       {{/each}}
       <h3>Select Days for work</h3>
+            <input type="checkbox" id="sun" name="day" value="Sunday">
+      <label for="sunday"> Sunday</label>
+
       <input type="checkbox" id="mon" name="day" value="Monday">
       <label for="monday"> Monday</label>
       <input type="checkbox" id="tues" name="day" value="Tuesday">
@@ -26,10 +34,24 @@
       <label for="thursday">Thursday</label>
       <input type="checkbox" id="fri" name="day" value="Friday">
       <label for="friday">Friday</label>
-      <input class="index" type="submit" value="Update Schedule"><br>
+            <input type="checkbox" id="sat" name="day" value="Saturday">
+      <label for="saturday"> Saturday</label>
+
+
+      <input class="submitBtn" type="submit" value="Update Schedule"> <br>
     </form>
+    		<p class="msg">{{messages.msg}}<p>
+
     <button class="index"><a href="/">Take me home</a></button>
+
   </div>
 </body>
+<script>
+        setTimeout(function(){
+            //document.querySelector(".error").innerHTML = "";
+			 document.querySelector(".msg").innerHTML = "";
+
+        }, 5000);
+    </script>
 
 </html>

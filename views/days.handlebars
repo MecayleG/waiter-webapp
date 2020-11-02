@@ -8,46 +8,32 @@
 </head>
 
 <body>
-  <div class="top">
-    <h2>Schedule for week 43</h2>
-    <i class="fa fa-cloud" style="font-size:15px;color:green;">3 waiters</i>
-    <i class="fa fa-cloud" style="font-size:15px;color:red;">less than 3 waiters</i>
-    <i class="fa fa-cloud" style="font-size:15px;color:rebeccapurple;">More than 3 waiters</i>
-  </div>
-  <table>
-  <tr>
-    <th>Day</th>
-  </tr>
-  <tr>
-    {{#each day}}
-    <td class="{{this.color}}">{{this.days}}</td>
-    {{/each}}
-  </tr>
-</table>
-  {{!-- <table>
-  <tr>
-    <th>Waiter Names</th>
-  </tr>
-  <tr>
-    {{#each name}}
-    <td class="">{{this.names}}</td>
-    {{/each}}
-  </tr>
-</table> --}}
+      <div class="home-page">
+      <h1 class="cafe-name">Jah's Café</h1>
+              <span>Live | Love | Laugh</span>
 
-
-    {{!-- <div class="weekdays">
-      {{#each day}}
-      <li class="dayStyle {{this.color}}">{{this.days}}</li>
-      {{/each}}
     </div>
-  <div class="box">
-    {{#each name}}
-    <li>{{this.names}}</li>
+  <div class="top">
+    <h1>Schedule for week 43</h1>
+    <i class="fa fa-cloud" style="font-size:15px;color:#1aff1a;"> Perfect</i>
+    <i class="fa fa-cloud" style="font-size:15px;color:gold;"> Insufficient</i>
+    <i class="fa fa-cloud" style="font-size:15px;color:red;"> Over subscribed</i>
+  </div>
+  <div class="weekdays">
+    {{#each shifts}}
+    <ul>
+      <li class="{{color}} dayStyle">{{day}}</li>
+      {{#each waiters}}
+      {{#each this}}
+      <li class="list">{{names}}</li>
+      {{/each}}
+      {{/each}}
+    </ul>
     {{/each}}
-  </div> --}}
-  <br>
-  <div class="admin-btn">
+
+  </div>
+
+  <div class="admin-div">
     <button class="btn-admin" name="link"><a href="/reset">Reset Week</a></button>
     <button class="btn-admin"><a href="/">Take me home</a></button>
 

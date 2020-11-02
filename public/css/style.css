@@ -1,75 +1,13 @@
+/* general */
+
 body {
-    font-family: 'Fondamento', cursive;
+    font-family: 'Lora', serif;
     padding: 1em;
 }
 
 a {
     text-decoration: none;
     color: #000000;
-}
-
-.weekdays {
-    display: inline-block;
-    margin-left: 32%;
-}
-
-.reset {
-    text-align: center;
-    margin-left: 32%;
-}
-
-.dayStyle {
-    border: 1px solid black;
-    /* display: inline-block; */
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-
-/* h2 {
-        text-align: center;
-    } */
-
-.cafe-name {
-    color: rosybrown;
-    font-family: 'Playfair Display', serif;
-}
-
-.home-page {
-    text-align: center;
-    border: rebeccapurple solid 1px;
-    padding: 1em;
-    /* background-color: black; */
-}
-
-.homeBtn {
-    border-radius: 0.5em;
-    padding: 0.5em;
-    margin: 0.5em;
-}
-
-.index {
-    border-radius: 0.5em;
-    padding: 0.5em;
-    margin: 0.5em;
-}
-
-.green {
-    background-color: green;
-}
-
-.red {
-    background-color: red;
-}
-
-.purple {
-    background-color: rebeccapurple;
-}
-
-.container {
-    border: black dotted 1px;
-    text-align: center;
 }
 
 .top {
@@ -81,22 +19,119 @@ a {
     margin: 0.5em;
 }
 
+.box {
+    display: inline-block;
+}
+
+.admin-div {
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+}
+
+
+/* day, waiter, cafe names */
+
+.list {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 1em;
+    margin: 0.2em;
+}
+
+.dayStyle {
+    display: inline;
+    padding: 1em;
+    border: 1px solid black;
+}
+
+.cafe-name {
+    color: gold;
+    font-family: "Playfair Display", serif;
+}
+
+.home-page {
+    text-align: center;
+    border-style: double;
+    padding: 1em;
+}
+
+.name {
+    color: gold;
+    font-size: 2em;
+}
+
+.msg {
+    color: #ff1a1a;
+    font-size: 1.5em;
+    font-weight: 100;
+}
+
+
+/* Buttons */
+
+.homeBtn {
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 0.5em;
+    background-color: white;
+    color: black;
+}
+
+.homeBtn:hover {
+    background-color: gold;
+}
+
+.index {
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 0.5em;
+    background-color: white;
+    color: black;
+}
+
+.index:hover {
+    background-color: gold;
+}
+
+.submitBtn {
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 0.5em;
+    background-color: white;
+    color: black;
+}
+
+.submitBtn:hover {
+    background-color: gold;
+}
+
 .btn-admin {
     border-radius: 0.5em;
     padding: 0.5em;
     margin-top: 1em;
     text-align: center;
+    background-color: white;
+    color: black;
 }
 
-.admin-btn {
-    text-align: center;
+.btn-admin:hover {
+    background-color: gold;
 }
 
-.box {
-    border: black 1px dashed;
-    display: inline-block;
+
+/* Day Colors */
+
+.green {
+    background-color: #1aff1a;
 }
 
-table {
-    width: 100%;
+.red {
+    background-color: #ff1a1a;
+}
+
+.purple {
+    background-color: gold;
 }
