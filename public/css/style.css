@@ -31,20 +31,32 @@ a {
     text-align: center;
 }
 
-
-/* day, waiter, cafe names */
-
-.list {
-    display: inline-block;
-    border: 1px solid black;
-    padding: 1em;
-    margin: 0.2em;
+.check {
+    height: 1.5em;
+    width: 1.5em;
 }
 
-.dayStyle {
-    display: inline;
-    padding: 1em;
+.label {
+    font-size: x-large;
+}
+
+table,
+th,
+td {
     border: 1px solid black;
+}
+
+th {
+    padding: 1em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+ul {
+    list-style: none;
 }
 
 .cafe-name {
@@ -132,6 +144,6 @@ a {
     background-color: #ff1a1a;
 }
 
-.purple {
+.gold {
     background-color: gold;
 }

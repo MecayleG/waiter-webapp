@@ -60,11 +60,16 @@ app.get("/waiters", async function(req, res) {
 app.post("/waiters/:username", async function(req, res) {
     let user = req.params.username
     let days = req.body.day
+    console.log(days)
     await waiters.waiterEntry(user);
-    await waiters.dayEntry(user, days)
+    let entry = await waiters.dayEntry(user, days)
+    await waiters.allNames()
     if (user && days !== "") {
         req.flash('msg', 'days successfully submitted')
     }
+    //  else if (entry = undefined) {
+    //     req.flash('msg', 'Please select days')
+    // }
 
     res.render("index", {
         name: [{
@@ -75,7 +80,18 @@ app.post("/waiters/:username", async function(req, res) {
 
 app.get("/waiters/:username", async function(req, res) {
     let user = req.params.username
+
     await waiters.waiterEntry(user);
+    let schedule = await waiters.returnNames()
+    let allDays = await waiters.returnDays();
+    allDays.forEach(day => {
+        schedule.forEach(shift => {
+            if (shift.dayid == day.id) {
+                day.state = 'checked'
+            }
+        });
+    });
+
 
 
     res.render("index", {
@@ -86,23 +102,20 @@ app.get("/waiters/:username", async function(req, res) {
     });
 });
 app.get("/days", async function(req, res) {
-    // let eachDay = await waiters.returnDays();
-    // let color = await waiters.colorsAssign();
     let names = await waiters.returnNames();
-    // console.log(color)
     res.render("days", {
-        // day: eachDay,
-        // color: color,
         shifts: names
     })
 
 });
-// app.get("/reset", async function(req, res) {
-//     await waiters.resetSchedule()
-//     res.render("days")
-// });
+app.get("/reset", async function(req, res) {
+    await waiters.resetSchedule()
+    req.flash('reset', 'Week succesfully reset')
 
-const PORT = process.env.PORT || 3030;
+    res.redirect("/days")
+});
+
+const PORT = process.env.PORT || 3060;
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);

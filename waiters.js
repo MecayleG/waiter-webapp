@@ -7,6 +7,11 @@ module.exports = function Waiters(pool) {
 
         }
     }
+    async function allNames() {
+        let all = await pool.query('select names from waiters_info');
+        // console.log(all.rows.names)
+        return all.rows
+    }
     async function dayEntry(name, day) {
         const selectQuery = await pool.query('select id from waiters_info where (names)=($1)', [name])
         const nameId = selectQuery.rows[0].id
@@ -16,6 +21,10 @@ module.exports = function Waiters(pool) {
             await pool.query('insert into all_info (names_id, days_id) values ($1, $2)', [nameId, dayId])
         }
     }
+    async function allInfoTable() {
+        let allInfo = await pool.query('select * from all_info')
+        return allInfo.rows
+    }
 
     async function returnDays() {
         const days = await pool.query('select days from weekdays');
@@ -24,50 +33,56 @@ module.exports = function Waiters(pool) {
     }
     async function returnNames() {
 
-        let shifts = [{
-                day: "",
-                days_Id: 1,
-                waiters: [],
-                color: ""
-            },
-            {
-                day: "",
-                days_Id: 2,
-                waiters: [],
-                color: ""
-            },
-            {
-                day: "",
-                days_Id: 3,
-                waiters: [],
-                color: ""
-            },
-            {
-                day: "",
-                days_Id: 4,
-                waiters: [],
-                color: ""
-            },
-            {
-                day: "",
-                days_Id: 5,
-                waiters: [],
-                color: ""
-            },
-            {
-                day: "",
-                days_Id: 6,
-                waiters: [],
-                color: ""
-            },
-            {
-                day: "",
-                days_Id: 7,
-                waiters: [],
-                color: ""
-            }
+        // let shifts = [{
+        //         day: "",
+        //         days_Id: 1,
+        //         waiters: [],
+        //         color: ""
+        //     },
+        //     {
+        //         day: "",
+        //         days_Id: 2,
+        //         waiters: [],
+        //         color: ""
+        //     },
+        //     {
+        //         day: "",
+        //         days_Id: 3,
+        //         waiters: [],
+        //         color: ""
+        //     },
+        //     {
+        //         day: "",
+        //         days_Id: 4,
+        //         waiters: [],
+        //         color: ""
+        //     },
+        //     {
+        //         day: "",
+        //         days_Id: 5,
+        //         waiters: [],
+        //         color: ""
+        //     },
+        //     {
+        //         day: "",
+        //         days_Id: 6,
+        //         waiters: [],
+        //         color: ""
+        //     },
+        //     {
+        //         day: "",
+        //         days_Id: 7,
+        //         waiters: [],
+        //         color: ""
+        //     }
 
-        ];
+        // ];
+
+        // get all the days from the database
+        const getAllTheDaysSQL = 'select * from weekdays';
+        const eachWeekday = await pool.query(getAllTheDaysSQL)
+        const shifts = eachWeekday.rows
+
 
         // loop over shifts
 
@@ -75,39 +90,38 @@ module.exports = function Waiters(pool) {
 
         // add the waiters to the waiters array
         for (let shift of shifts) {
-            const sql = 'select names from waiters_info join all_info on waiters_info.id = all_info.names_id where days_id = $1'
-            let name = await pool.query(sql, [shift.days_Id])
+            const sql = 'select names, all_info.id  from waiters_info join all_info on waiters_info.id = all_info.names_id where days_id = $1'
+            let name = await pool.query(sql, [shift.id])
             let waiterNames = name.rows
-            shift.waiters.push(waiterNames)
-            if (shift.waiters[0].length > 3) {
-                shift.color = 'red'
-            } else if (shift.waiters[0].length < 3) {
+            shift.waiters = waiterNames
 
-                shift.color = 'purple'
-            } else {
-                shift.color = 'green'
+            if (shift.waiters && shift.waiters.length > 0) {
+                if (shift.waiters.length > 3) {
+                    shift.color = 'red'
+                } else if (shift.waiters.length === 3) {
+
+                    shift.color = 'green'
+                } else {
+                    shift.color = 'gold'
+                }
             }
-        }
-        for (let eachDay of shifts) {
-            const sql = 'select days from weekdays right join all_info on weekdays.Id = all_info.days_Id where days_id = $1'
-            let day = await pool.query(sql, [eachDay.days_Id])
-            let dayNames = day.rows[0].days
-                // console.log(dayNames)
-            eachDay.day = dayNames
+
         }
 
         return shifts
 
     }
 
-    // async function resetSchedule() {
-    //     await pool.query('alter table all_info drop column names_id')
-    // }
+    async function resetSchedule() {
+        await pool.query('delete from all_info')
+    }
     return {
         waiterEntry,
+        allNames,
         dayEntry,
+        allInfoTable,
         returnDays,
         returnNames,
-        // resetSchedule
+        resetSchedule
     }
 }

@@ -21,21 +21,27 @@
       <h2 class="name" <a href="/waiters/{{this.user}}"> Hello {{this.user}}</a></h2>
       {{/each}}
       <h3>Select Days for work</h3>
-            <input type="checkbox" id="sun" name="day" value="Sunday">
-      <label for="sunday"> Sunday</label>
-
-      <input type="checkbox" id="mon" name="day" value="Monday">
-      <label for="monday"> Monday</label>
-      <input type="checkbox" id="tues" name="day" value="Tuesday">
-      <label for="tuesday">Tuesday</label>
-      <input type="checkbox" id="wed" name="day" value="Wednesday">
-      <label for="wednesday">Wednesday</label>
-      <input type="checkbox" id="thurs" name="day" value="Thursday">
-      <label for="thursday">Thursday</label>
-      <input type="checkbox" id="fri" name="day" value="Friday">
-      <label for="friday">Friday</label>
-            <input type="checkbox" id="sat" name="day" value="Saturday">
-      <label for="saturday"> Saturday</label>
+      <input type="checkbox" id="sun" name="day" class="check" value="Sunday">
+      <span class="checkmark"></span>
+      <label for="sunday" class="label"> Sunday</label>
+      <input type="checkbox" id="mon" name="day" class="check" value="Monday">
+      <span class="checkmark"></span>
+      <label for="monday" class="label"> Monday</label>
+      <input type="checkbox" id="tues" name="day" class="check" value="Tuesday">
+      <span class="checkmark"></span>
+      <label for="tuesday" class="label">Tuesday</label>
+      <input type="checkbox" id="wed" name="day" class="check" value="Wednesday">
+      <span class="checkmark"></span>
+      <label for="wednesday" class="label">Wednesday</label>
+      <input type="checkbox" id="thurs" name="day" class="check" value="Thursday">
+      <span class="checkmark"></span>
+      <label for="thursday" class="label">Thursday</label>
+      <input type="checkbox" id="fri" name="day" class="check" value="Friday">
+      <span class="checkmark"></span>
+      <label for="friday" class="label">Friday</label>
+            <input type="checkbox" id="sat" name="day" class="check" value="Saturday">
+            <span class="checkmark"></span>
+      <label for="saturday" class="label"> Saturday</label>
 
 
       <input class="submitBtn" type="submit" value="Update Schedule"> <br>
@@ -48,7 +54,6 @@
 </body>
 <script>
         setTimeout(function(){
-            //document.querySelector(".error").innerHTML = "";
 			 document.querySelector(".msg").innerHTML = "";
 
         }, 5000);
