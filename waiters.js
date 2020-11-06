@@ -9,7 +9,6 @@ module.exports = function Waiters(pool) {
     }
     async function allNames() {
         let all = await pool.query('select names from waiters_info');
-        // console.log(all.rows.names)
         return all.rows
     }
     async function dayEntry(name, day) {
