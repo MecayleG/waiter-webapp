@@ -48,6 +48,7 @@ td {
 
 th {
     padding: 1em;
+    font-size: x-large;
 }
 
 table {
@@ -71,14 +72,23 @@ ul {
 }
 
 .name {
-    color: gold;
+    color: #00cc00;
     font-size: 2em;
+    font-family: 'Grenze Gotisch', cursive;
 }
 
 .msg {
     color: #ff1a1a;
     font-size: 1.5em;
     font-weight: 100;
+}
+
+.waiters {
+    font-size: x-large;
+}
+
+.x {
+    color: #ff1a1a;
 }
 
 
@@ -136,14 +146,20 @@ ul {
 
 /* Day Colors */
 
-.green {
+.green,
+.lime {
     background-color: #1aff1a;
 }
 
-.red {
+.red,
+.redish {
     background-color: #ff1a1a;
 }
 
-.gold {
+.gold,
+.yellow {
     background-color: gold;
 }
+
+
+/* span colors */

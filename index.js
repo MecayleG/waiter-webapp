@@ -53,51 +53,56 @@ app.get("/", async function(req, res) {
     })
 });
 app.get("/waiters", async function(req, res) {
-    res.render("index", {
+    let allDays = await waiters.returnDays();
 
+    res.render("index", {
+        allDays
     })
 });
 app.post("/waiters/:username", async function(req, res) {
     let user = req.params.username
     let days = req.body.day
-    console.log(days)
-    await waiters.waiterEntry(user);
-    let entry = await waiters.dayEntry(user, days)
-    await waiters.allNames()
+    console.log(days.length)
     if (user && days !== "") {
         req.flash('msg', 'days successfully submitted')
     }
-    //  else if (entry = undefined) {
+    //  else if (user !== "" && days.length === 0) {
     //     req.flash('msg', 'Please select days')
     // }
+    let allDays = await waiters.returnDays();
+    await waiters.waiterEntry(user);
+    await waiters.dayEntry(user, days)
+
+    await waiters.allNames()
+
 
     res.render("index", {
         name: [{
             'user': user
-        }]
+        }],
+        allDays
     })
 });
 
 app.get("/waiters/:username", async function(req, res) {
     let user = req.params.username
-
     await waiters.waiterEntry(user);
-    let schedule = await waiters.returnNames()
+    await waiters.returnNames()
     let allDays = await waiters.returnDays();
+    let theNameId = await waiters.getId(user)
+    let schedule = await waiters.selectedShifts(theNameId)
     allDays.forEach(day => {
         schedule.forEach(shift => {
-            if (shift.dayid == day.id) {
-                day.state = 'checked'
+            if (shift.days_id === day.id) {
+                day.state = "checked"
             }
         });
     });
-
-
-
     res.render("index", {
         name: [{
             'user': user
-        }]
+        }],
+        allDays
 
     });
 });
@@ -108,6 +113,11 @@ app.get("/days", async function(req, res) {
     })
 
 });
+app.get("/shift_delete/:id", async function(req, res) {
+    let individualId = req.params.id
+    await waiters.deleteId(individualId)
+    res.redirect("/waiters")
+})
 app.get("/reset", async function(req, res) {
     await waiters.resetSchedule()
     req.flash('reset', 'Week succesfully reset')
@@ -115,7 +125,7 @@ app.get("/reset", async function(req, res) {
     res.redirect("/days")
 });
 
-const PORT = process.env.PORT || 3060;
+const PORT = process.env.PORT || 3040;
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);

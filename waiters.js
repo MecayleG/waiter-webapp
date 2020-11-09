@@ -26,64 +26,16 @@ module.exports = function Waiters(pool) {
     }
 
     async function returnDays() {
-        const days = await pool.query('select days from weekdays');
+        const days = await pool.query('select * from weekdays');
         return days.rows
 
     }
     async function returnNames() {
-
-        // let shifts = [{
-        //         day: "",
-        //         days_Id: 1,
-        //         waiters: [],
-        //         color: ""
-        //     },
-        //     {
-        //         day: "",
-        //         days_Id: 2,
-        //         waiters: [],
-        //         color: ""
-        //     },
-        //     {
-        //         day: "",
-        //         days_Id: 3,
-        //         waiters: [],
-        //         color: ""
-        //     },
-        //     {
-        //         day: "",
-        //         days_Id: 4,
-        //         waiters: [],
-        //         color: ""
-        //     },
-        //     {
-        //         day: "",
-        //         days_Id: 5,
-        //         waiters: [],
-        //         color: ""
-        //     },
-        //     {
-        //         day: "",
-        //         days_Id: 6,
-        //         waiters: [],
-        //         color: ""
-        //     },
-        //     {
-        //         day: "",
-        //         days_Id: 7,
-        //         waiters: [],
-        //         color: ""
-        //     }
-
-        // ];
-
         // get all the days from the database
         const getAllTheDaysSQL = 'select * from weekdays';
         const eachWeekday = await pool.query(getAllTheDaysSQL)
         const shifts = eachWeekday.rows
-
-
-        // loop over shifts
+            // loop over shifts
 
         // run the select query for each...
 
@@ -104,11 +56,20 @@ module.exports = function Waiters(pool) {
                     shift.color = 'gold'
                 }
             }
-
         }
-
         return shifts
 
+    }
+    async function getId(param) {
+        let nameId = await pool.query('select id from waiters_info where (names)=($1)', [param])
+        return nameId.rows[0].id
+    }
+    async function selectedShifts(id) {
+        let getId = await pool.query('select * from weekdays join all_info on weekdays.id = all_info.days_id where names_id =($1)', [id])
+        return getId.rows
+    }
+    async function deleteId(nameId) {
+        await pool.query('delete from all_info where id = ($1)', [nameId])
     }
 
     async function resetSchedule() {
@@ -121,6 +82,9 @@ module.exports = function Waiters(pool) {
         allInfoTable,
         returnDays,
         returnNames,
+        getId,
+        selectedShifts,
+        deleteId,
         resetSchedule
     }
 }
