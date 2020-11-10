@@ -5,7 +5,7 @@ const Waiters = require("../waiters");
 describe("The Waiter Availability", function() {
     const pg = require("pg");
     const Pool = pg.Pool;
-    const connectionString = process.env.DATABASE_URL || 'postgresql://root:mecayle123@localhost:5432/testDB';
+    const connectionString = process.env.DATABASE_URL || 'postgresql://root:mecayle123@localhost:5432/waitersdatabase';
     const pool = new Pool({
         connectionString
     });
