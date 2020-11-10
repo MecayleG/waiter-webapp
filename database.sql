@@ -15,3 +15,10 @@ create table all_info(
     foreign key (names_id) references waiters_info(id),
     foreign key (days_id) references weekdays(id)
 );
+insert into weekdays (days) values ('Sunday');
+insert into weekdays (days) values ('Monday');
+insert into weekdays (days) values ('Tuesday');
+insert into weekdays (days) values ('Wednesday');
+insert into weekdays (days) values ('Thursday');
+insert into weekdays (days) values ('Friday');
+insert into weekdays (days) values ('Saturday');
