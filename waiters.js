@@ -18,6 +18,7 @@ module.exports = function Waiters(pool) {
             const selectedDays = await pool.query('select id from weekdays where days =($1)', [day[i]])
             const dayId = selectedDays.rows[0].id
             await pool.query('insert into all_info (names_id, days_id) values ($1, $2)', [nameId, dayId])
+
         }
     }
     async function allInfoTable() {

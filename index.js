@@ -62,14 +62,18 @@ app.get("/waiters", async function(req, res) {
 app.post("/waiters/:username", async function(req, res) {
     let user = req.params.username
     let days = req.body.day
-    console.log(days.length)
+    let allDays = await waiters.returnDays();
+    console.log(days)
     if (user && days !== "") {
         req.flash('msg', 'days successfully submitted')
     }
-    //  else if (user !== "" && days.length === 0) {
-    //     req.flash('msg', 'Please select days')
-    // }
-    let allDays = await waiters.returnDays();
+    if (days === undefined) {
+        req.flash('msg', 'Please select days')
+        res.render("index", {
+            allDays
+        });
+        return
+    }
     await waiters.waiterEntry(user);
     await waiters.dayEntry(user, days)
 
@@ -107,17 +111,30 @@ app.get("/waiters/:username", async function(req, res) {
     });
 });
 app.get("/days", async function(req, res) {
-    let names = await waiters.returnNames();
-    res.render("days", {
-        shifts: names
-    })
+    let selectedWeek = req.body.week
 
+    let names = await waiters.returnNames();
+
+    res.render("days", {
+        shifts: names,
+        week: selectedWeek
+    })
 });
 app.get("/shift_delete/:id", async function(req, res) {
     let individualId = req.params.id
     await waiters.deleteId(individualId)
     res.redirect("/waiters")
-})
+});
+app.post("/week", async function(req, res) {
+    let selectedWeek = req.body.week
+    let names = await waiters.returnNames();
+
+    res.render("days", {
+        week: selectedWeek,
+        shifts: names
+
+    })
+});
 app.get("/reset", async function(req, res) {
     await waiters.resetSchedule()
     req.flash('reset', 'Week succesfully reset')
@@ -125,7 +142,7 @@ app.get("/reset", async function(req, res) {
     res.redirect("/days")
 });
 
-const PORT = process.env.PORT || 3040;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);
