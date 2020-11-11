@@ -59,7 +59,6 @@ module.exports = function Waiters(pool) {
                 }
             }
         }
-        console.log(shifts)
         return shifts
 
     }

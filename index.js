@@ -64,15 +64,14 @@ app.post("/waiters/:username", async function(req, res) {
     let days = req.body.day
     let allDays = await waiters.returnDays();
     console.log(days)
-    if (user && days !== "") {
-        req.flash('msg', 'days successfully submitted')
-    }
     if (days === undefined) {
-        req.flash('msg', 'Please select days')
+        req.flash('error', 'Please select days')
         res.render("index", {
             allDays
         });
         return
+    } else if (user && days !== "") {
+        req.flash('msg', 'days successfully submitted')
     }
     await waiters.waiterEntry(user);
     await waiters.dayEntry(user, days)
@@ -125,16 +124,16 @@ app.get("/shift_delete/:id", async function(req, res) {
     await waiters.deleteId(individualId)
     res.redirect("/waiters")
 });
-app.post("/week", async function(req, res) {
-    let selectedWeek = req.body.week
-    let names = await waiters.returnNames();
+// app.post("/week", async function(req, res) {
+//     let selectedWeek = req.body.week
+//     let names = await waiters.returnNames();
 
-    res.render("days", {
-        week: selectedWeek,
-        shifts: names
+//     res.render("days", {
+//         week: selectedWeek,
+//         shifts: names
 
-    })
-});
+//     })
+// });
 app.get("/reset", async function(req, res) {
     await waiters.resetSchedule()
     req.flash('reset', 'Week succesfully reset')

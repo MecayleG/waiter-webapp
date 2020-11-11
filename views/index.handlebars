@@ -15,6 +15,7 @@
     </div>
 
     <h1>Waiter Schedule</h1>
+    <p>waiters to please select a minimum of 3 working days</p>
 
     {{#each name}}
     <form action="/waiters/{{this.user}}" method="POST">
@@ -27,31 +28,11 @@
       <span class="checkmark"></span>
       <label for="all" class="label" > {{this.days}}</label>
           {{/each}}
-      {{!-- <input type="checkbox" id="sun" name="day" class="check" value="Sunday">
-      <span class="checkmark"></span>
-      <input type="checkbox" id="mon" name="day" class="check" value="Monday">
-      <span class="checkmark"></span>
-      <label for="monday" class="label"> Monday</label>
-      <input type="checkbox" id="tues" name="day" class="check" value="Tuesday">
-      <span class="checkmark"></span>
-      <label for="tuesday" class="label">Tuesday</label>
-      <input type="checkbox" id="wed" name="day" class="check" value="Wednesday">
-      <span class="checkmark"></span>
-      <label for="wednesday" class="label">Wednesday</label>
-      <input type="checkbox" id="thurs" name="day" class="check" value="Thursday">
-      <span class="checkmark"></span>
-      <label for="thursday" class="label">Thursday</label>
-      <input type="checkbox" id="fri" name="day" class="check" value="Friday">
-      <span class="checkmark"></span>
-      <label for="friday" class="label">Friday</label>
-            <input type="checkbox" id="sat" name="day" class="check" value="Saturday">
-            <span class="checkmark"></span>
-      <label for="saturday" class="label"> Saturday</label> --}}
-
-
       <input class="submitBtn" type="submit" value="Update Schedule"> <br>
     </form>
     		<p class="msg">{{messages.msg}}<p>
+        <p class="error">{{messages.error}}<p>
+
 
     <button class="index"><a href="/">Take me home</a></button>
 
