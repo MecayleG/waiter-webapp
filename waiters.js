@@ -17,6 +17,7 @@ module.exports = function Waiters(pool) {
         for (let i = 0; i < day.length; i++) {
             const selectedDays = await pool.query('select id from weekdays where days =($1)', [day[i]])
             const dayId = selectedDays.rows[0].id
+                // console.log(dayId)
             await pool.query('insert into all_info (names_id, days_id) values ($1, $2)', [nameId, dayId])
 
         }
@@ -58,6 +59,7 @@ module.exports = function Waiters(pool) {
                 }
             }
         }
+        console.log(shifts)
         return shifts
 
     }

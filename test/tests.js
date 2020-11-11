@@ -5,7 +5,7 @@ const Waiters = require("../waiters");
 describe("The Waiter Availability", function() {
     const pg = require("pg");
     const Pool = pg.Pool;
-    const connectionString = process.env.DATABASE_URL || 'postgresql://root:mecayle123@localhost:5432/waitersdatabase';
+    const connectionString = process.env.DATABASE_URL || 'postgresql://root:mecayle123@localhost:5432/testDB';
     const pool = new Pool({
         connectionString
     });
@@ -46,20 +46,20 @@ describe("The Waiter Availability", function() {
             await waiters.waiterEntry("Kelly")
 
             await waiters.dayEntry("Kelly", ["Monday", "Tuesday"]);
-            assert.deepEqual([{ "days_id": 2, "id": 1, "names_id": 1 }, { "days_id": 3, "id": 2, "names_id": 1 }], await waiters.allInfoTable());
+            assert.deepEqual([{ "id": 1, "names_id": 1, "days_id": 2 }, { "id": 2, "names_id": 1, "days_id": 3 }], await waiters.allInfoTable());
         });
         it("should add the name Nora and Sunday,Monday,Wednesday into the database as Id's", async function() {
             let waiters = Waiters(pool)
 
             await waiters.waiterEntry("Nora")
             await waiters.dayEntry("Nora", ["Sunday", "Monday", "Wednesday"]);
-            assert.deepEqual([{ "days_id": 1, "id": 1, "names_id": 1 }, { "days_id": 2, "id": 2, "names_id": 1 }, { "days_id": 4, "id": 3, "names_id": 1 }], await waiters.allInfoTable());
+            assert.deepEqual([{ "id": 1, "names_id": 1, "days_id": 1 }, { "id": 2, "names_id": 1, "days_id": 2 }, { "id": 3, "names_id": 1, "days_id": 4 }], await waiters.allInfoTable());
         });
         it("should add the name Tinka and Thursday,Friday,Saturday into the database as Id's", async function() {
             let waiters = Waiters(pool)
             await waiters.waiterEntry("tinka")
             await waiters.dayEntry("tinka", ["Thursday", "Friday", "Saturday"]);
-            assert.deepEqual([{ "days_id": 5, "id": 1, "names_id": 1 }, { "days_id": 6, "id": 2, "names_id": 1 }, { "days_id": 7, "id": 3, "names_id": 1 }], await waiters.allInfoTable());
+            assert.deepEqual([{ "id": 1, "names_id": 1, "days_id": 5 }, { "id": 2, "names_id": 1, "days_id": 6 }, { "id": 3, "names_id": 1, "days_id": 7 }], await waiters.allInfoTable());
         });
     });
     describe("The returnNames function", function() {
@@ -73,7 +73,7 @@ describe("The Waiter Availability", function() {
             await waiters.dayEntry("zola", ["Thursday", "Friday", "Saturday"]);
 
 
-            assert.deepEqual([{ "days": "Sunday", "id": 1, "waiters": [] }, { "color": "gold", "days": "Monday", "id": 2, "waiters": [{ "id": 1, "names": "lola" }] }, { "color": "gold", "days": "Tuesday", "id": 3, "waiters": [{ "id": 4, "names": "sia" }] }, { "color": "gold", "days": "Wednesday", "id": 4, "waiters": [{ "id": 5, "names": "sia" }] }, { "color": "gold", "days": "Thursday", "id": 5, "waiters": [{ "id": 7, "names": "zola" }] }, { "color": "gold", "days": "Friday", "id": 6, "waiters": [{ "id": 2, "names": "lola" }, { "id": 8, "names": "zola" }] }, { "color": "green", "days": "Saturday", "id": 7, "waiters": [{ "id": 3, "names": "lola" }, { "id": 6, "names": "sia" }, { "id": 9, "names": "zola" }] }], await waiters.returnNames());
+            assert.deepEqual([{ "id": 1, "days": "Sunday", "waiters": [] }, { "id": 2, "days": "Monday", "waiters": [{ "id": 1, "names": "lola" }], "color": "gold" }, { "id": 3, "days": "Tuesday", "waiters": [{ "id": 4, "names": "sia" }], "color": "gold", }, { "id": 4, "days": "Wednesday", "waiters": [{ "id": 5, "names": "sia" }], "color": "gold" }, { "id": 5, "days": "Thursday", "waiters": [{ "id": 7, "names": "zola" }], "color": "gold" }, { "id": 6, "days": "Friday", "waiters": [{ "id": 2, "names": "lola" }, { "id": 8, "names": "zola" }], "color": "gold" }, { "id": 7, "days": "Saturday", "waiters": [{ "id": 3, "names": "lola" }, { "id": 6, "names": "sia" }, { "id": 9, "names": "zola" }], "color": "green" }], await waiters.returnNames());
         });
         it("should change the color to gold for less than 3 waiters on selected days", async function() {
             let waiters = Waiters(pool)
@@ -83,7 +83,7 @@ describe("The Waiter Availability", function() {
             await waiters.dayEntry("launa", ["Tuesday", "Wednesday", "Thursday"]);
 
 
-            assert.deepEqual([{ "days": "Sunday", "id": 1, "waiters": [] }, { "color": "gold", "days": "Monday", "id": 2, "waiters": [{ "id": 1, "names": "kiya" }] }, { "color": "gold", "days": "Tuesday", "id": 3, "waiters": [{ "id": 4, "names": "launa" }] }, { "color": "gold", "days": "Wednesday", "id": 4, "waiters": [{ "id": 5, "names": "launa" }] }, { "color": "gold", "days": "Thursday", "id": 5, "waiters": [{ "id": 6, "names": "launa" }] }, { "color": "gold", "days": "Friday", "id": 6, "waiters": [{ "id": 2, "names": "kiya" }] }, { "color": "gold", "days": "Saturday", "id": 7, "waiters": [{ "id": 3, "names": "kiya" }] }], await waiters.returnNames());
+            assert.deepEqual([{ "id": 1, "days": "Sunday", "waiters": [] }, { "id": 2, "days": "Monday", "waiters": [{ "id": 1, "names": "kiya" }], "color": "gold" }, { "id": 3, "days": "Tuesday", "waiters": [{ "id": 4, "names": "launa" }], "color": "gold" }, { "id": 4, "days": "Wednesday", "waiters": [{ "id": 5, "names": "launa" }], "color": "gold" }, { "id": 5, "days": "Thursday", "waiters": [{ "id": 6, "names": "launa" }], "color": "gold", }, { "id": 6, "days": "Friday", "waiters": [{ "id": 2, "names": "kiya" }], "color": "gold" }, { "id": 7, "days": "Saturday", "waiters": [{ "id": 3, "names": "kiya" }], "color": "gold" }], await waiters.returnNames());
         });
         it("should change the color to red for more than 3 waiters on selected days", async function() {
             let waiters = Waiters(pool)
@@ -98,7 +98,7 @@ describe("The Waiter Availability", function() {
 
 
 
-            assert.deepEqual([{ "color": "red", "days": "Sunday", "id": 1, "waiters": [{ "id": 1, "names": "kiya" }, { "id": 4, "names": "launa" }, { "id": 7, "names": "Ami" }, { "id": 10, "names": "joe" }] }, { "days": "Monday", "id": 2, "waiters": [] }, { "color": "gold", "days": "Tuesday", "id": 3, "waiters": [{ "id": 5, "names": "launa" }] }, { "color": "gold", "days": "Wednesday", "id": 4, "waiters": [{ "id": 8, "names": "Ami" }, { "id": 11, "names": "joe" }] }, { "color": "gold", "days": "Thursday", "id": 5, "waiters": [{ "id": 6, "names": "launa" }, { "id": 12, "names": "joe" }] }, { "color": "gold", "days": "Friday", "id": 6, "waiters": [{ "id": 2, "names": "kiya" }, { "id": 9, "names": "Ami" }] }, { "color": "gold", "days": "Saturday", "id": 7, "waiters": [{ "id": 3, "names": "kiya" }] }], await waiters.returnNames());
+            assert.deepEqual([{ "id": 1, "days": "Sunday", "waiters": [{ "id": 1, "names": "kiya" }, { "id": 4, "names": "launa" }, { "id": 7, "names": "Ami" }, { "id": 10, "names": "joe" }], "color": "red" }, { "id": 2, "days": "Monday", "waiters": [] }, { "id": 3, "days": "Tuesday", "waiters": [{ "id": 5, "names": "launa" }], "color": "gold" }, { "id": 4, "days": "Wednesday", "waiters": [{ "id": 8, "names": "Ami" }, { "id": 11, "names": "joe" }], "color": "gold" }, { "id": 5, "days": "Thursday", "waiters": [{ "id": 6, "names": "launa" }, { "id": 12, "names": "joe" }], "color": "gold", }, { "id": 6, "days": "Friday", "waiters": [{ "id": 2, "names": "kiya" }, { "id": 9, "names": "Ami" }], "color": "gold", }, { "id": 7, "days": "Saturday", "waiters": [{ "id": 3, "names": "kiya" }], "color": "gold" }], await waiters.returnNames());
         });
 
 
