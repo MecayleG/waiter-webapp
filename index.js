@@ -6,7 +6,7 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 
 const Waiters = require("./waiters");
-// const routes = require("./routes/route")
+const routes = require("./routes/route")
 const flash = require('express-flash');
 
 const session = require('express-session');
@@ -29,7 +29,7 @@ const pool = new Pool({
 });
 
 const waiters = Waiters(pool);
-// const route = routes(waiters);
+const route = routes(waiters);
 
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
@@ -47,101 +47,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
 
-app.get("/", async function(req, res) {
-    res.render("home", {
+app.get("/", route.home);
+app.get("/waiters", route.waitersInfo);
+app.post("/waiters/:username", route.add);
+app.get("/waiters/:username", route.get);
+app.get("/days", route.admin);
+app.get("/reset", route.reset);
 
-    })
-});
-app.get("/waiters", async function(req, res) {
-    let allDays = await waiters.returnDays();
-
-    res.render("index", {
-        allDays
-    })
-});
-app.post("/waiters/:username", async function(req, res) {
-    let user = req.params.username
-    let days = req.body.day
-    let allDays = await waiters.returnDays();
-    console.log(days)
-    if (days === undefined) {
-        req.flash('error', 'Please select days')
-        res.render("index", {
-            allDays
-        });
-        return
-    } else if (user && days !== "") {
-        req.flash('msg', 'days successfully submitted')
-    }
-    await waiters.waiterEntry(user);
-    await waiters.dayEntry(user, days)
-
-    await waiters.allNames()
-
-
-    res.render("index", {
-        name: [{
-            'user': user
-        }],
-        allDays
-    })
-});
-
-app.get("/waiters/:username", async function(req, res) {
-    let user = req.params.username
-    await waiters.waiterEntry(user);
-    await waiters.returnNames()
-    let allDays = await waiters.returnDays();
-    let theNameId = await waiters.getId(user)
-    let schedule = await waiters.selectedShifts(theNameId)
-    allDays.forEach(day => {
-        schedule.forEach(shift => {
-            if (shift.days_id === day.id) {
-                day.state = "checked"
-            }
-        });
-    });
-    res.render("index", {
-        name: [{
-            'user': user
-        }],
-        allDays
-
-    });
-});
-app.get("/days", async function(req, res) {
-    let selectedWeek = req.body.week
-
-    let names = await waiters.returnNames();
-
-    res.render("days", {
-        shifts: names,
-        week: selectedWeek
-    })
-});
-app.get("/shift_delete/:id", async function(req, res) {
-    let individualId = req.params.id
-    await waiters.deleteId(individualId)
-    res.redirect("/waiters")
-});
-// app.post("/week", async function(req, res) {
-//     let selectedWeek = req.body.week
-//     let names = await waiters.returnNames();
-
-//     res.render("days", {
-//         week: selectedWeek,
-//         shifts: names
-
-//     })
-// });
-app.get("/reset", async function(req, res) {
-    await waiters.resetSchedule()
-    req.flash('reset', 'Week succesfully reset')
-
-    res.redirect("/days")
-});
-
-const PORT = process.env.PORT || 3010;
+const PORT = process.env.PORT || 3060;
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);

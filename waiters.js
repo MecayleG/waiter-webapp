@@ -70,9 +70,6 @@ module.exports = function Waiters(pool) {
         let getId = await pool.query('select * from weekdays join all_info on weekdays.id = all_info.days_id where names_id =($1)', [id])
         return getId.rows
     }
-    async function deleteId(nameId) {
-        await pool.query('delete from all_info where id = ($1)', [nameId])
-    }
 
     async function resetSchedule() {
         await pool.query('delete from all_info')
@@ -86,7 +83,6 @@ module.exports = function Waiters(pool) {
         returnNames,
         getId,
         selectedShifts,
-        deleteId,
         resetSchedule
     }
 }

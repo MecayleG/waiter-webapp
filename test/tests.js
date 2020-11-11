@@ -40,6 +40,20 @@ describe("The Waiter Availability", function() {
             assert.deepEqual([{ names: "tinka" }], await waiters.allNames())
         });
     });
+    describe("The allNames function", function() {
+        it("should return all the names in waiters_info table in the database", async function() {
+            let waiters = Waiters(pool)
+
+            await waiters.waiterEntry("troy")
+            await waiters.waiterEntry("kelly")
+            await waiters.waiterEntry("kg")
+            await waiters.waiterEntry("boy")
+
+            assert.deepEqual([{ names: "troy" }, { names: "kelly" }, { names: "kg" }, { names: "boy" }], await waiters.allNames());
+
+        });
+    });
+
     describe("The dayEntry function", function() {
         it("should add the name Kelly and Monday,Tuesday into the database as Id's", async function() {
             let waiters = Waiters(pool)
@@ -62,6 +76,36 @@ describe("The Waiter Availability", function() {
             assert.deepEqual([{ "id": 1, "names_id": 1, "days_id": 5 }, { "id": 2, "names_id": 1, "days_id": 6 }, { "id": 3, "names_id": 1, "days_id": 7 }], await waiters.allInfoTable());
         });
     });
+    describe("The allInfoTable function", function() {
+        it("should return all from all_info table in the database", async function() {
+            let waiters = Waiters(pool)
+
+            await waiters.waiterEntry("troy")
+            await waiters.dayEntry("troy", ["Sunday", "Monday", "Tuesday"]);
+
+            await waiters.waiterEntry("kelly")
+            await waiters.dayEntry("kelly", ["Wednesday", "Thursday", "Friday"]);
+
+            assert.deepEqual([{ "id": 1, "names_id": 1, "days_id": 1 }, { "id": 2, "names_id": 1, "days_id": 2 }, { "id": 3, "names_id": 1, "days_id": 3 }, { "id": 4, "names_id": 2, "days_id": 4 }, { "id": 5, "names_id": 2, "days_id": 5 }, { "id": 6, "names_id": 2, "days_id": 6 }], await waiters.allInfoTable());
+
+        });
+    });
+    describe("The returnDays function", function() {
+        it("should return all the days from the weekdays table in the database", async function() {
+            let waiters = Waiters(pool)
+            assert.deepEqual([{ "id": 1, "days": "Sunday" }, { "id": 2, "days": "Monday" }, { "id": 3, "days": "Tuesday" }, { "id": 4, "days": "Wednesday" }, { "id": 5, "days": "Thursday" }, { "id": 6, "days": "Friday" }, { "id": 7, "days": "Saturday" }], await waiters.returnDays());
+
+        });
+    });
+    describe("The getId function", function() {
+        it("should return the id of the name entered in the waiters_info table in the database", async function() {
+            let waiters = Waiters(pool)
+            await waiters.waiterEntry("troy")
+            assert.deepEqual(1, await waiters.getId("troy"));
+
+        });
+    });
+
     describe("The returnNames function", function() {
         it("should change the color to green for 3 waiters on selected days", async function() {
             let waiters = Waiters(pool)
@@ -103,6 +147,16 @@ describe("The Waiter Availability", function() {
 
 
     });
+    describe("The selectedShifts function", function() {
+        it("should return the shifts from the all_info table for a selected id", async function() {
+            let waiters = Waiters(pool)
+            await waiters.waiterEntry("kiya")
+            await waiters.dayEntry("kiya", ["Sunday", "Friday", "Saturday"]);
+            assert.deepEqual([{ "id": 1, "days": "Sunday", "names_id": 1, "days_id": 1 }, { "id": 2, "days": "Friday", "names_id": 1, "days_id": 6 }, { "id": 3, "days": "Saturday", "names_id": 1, "days_id": 7 }], await waiters.selectedShifts(1));
+
+        });
+    });
+
 
     after(function() {
         pool.end();
