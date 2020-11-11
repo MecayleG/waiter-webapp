@@ -141,7 +141,7 @@ app.get("/reset", async function(req, res) {
     res.redirect("/days")
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3010;
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);

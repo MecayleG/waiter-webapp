@@ -14,10 +14,10 @@ module.exports = function Waiters(pool) {
     async function dayEntry(name, day) {
         const selectQuery = await pool.query('select id from waiters_info where (names)=($1)', [name])
         const nameId = selectQuery.rows[0].id
+        await pool.query('delete from all_info where names_id = $1', [nameId])
         for (let i = 0; i < day.length; i++) {
             const selectedDays = await pool.query('select id from weekdays where days =($1)', [day[i]])
             const dayId = selectedDays.rows[0].id
-                // console.log(dayId)
             await pool.query('insert into all_info (names_id, days_id) values ($1, $2)', [nameId, dayId])
 
         }

@@ -40,9 +40,6 @@
             <ul>
           {{#each waiters}}
               <li class="waiters">{{names}} <a class="x" href="/shift_delete/{{id}}">x</a></li>
-              {{!-- <form action="/shift_delete/{{id}}" method="POST">
-                  <input type="submit" value="X" class="x">
-              </form> --}}
           {{/each}}
             </ul>
           </td>
@@ -55,8 +52,6 @@
     <button class="btn-admin" name="link"><a href="/reset">Reset Week</a></button>
     <button class="btn-admin"><a href="/">Take me home</a></button>
         		<p class="msg">{{messages.reset}}<p>
-
-
   </div>
 </body>
 <script>
