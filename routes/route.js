@@ -11,7 +11,7 @@ module.exports = function TheRoutes(waiters) {
     async function waitersInfo(req, res, next) {
         try {
             let allDays = await waiters.returnDays();
-            res.render("index", {
+            res.render("welcome", {
                 allDays
             })
 

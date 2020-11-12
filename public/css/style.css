@@ -74,7 +74,6 @@ ul {
 .name {
     color: #00cc00;
     font-size: 2em;
-    font-family: 'Grenze Gotisch', cursive;
 }
 
 .msg {
@@ -96,6 +95,18 @@ ul {
 .x,
 p {
     color: #ff1a1a;
+}
+
+.welcome {
+    background: rgb(69, 177, 46);
+    background: linear-gradient(90deg, rgba(69, 177, 46, 1) 9%, rgba(206, 207, 26, 1) 47%, rgba(185, 40, 40, 1) 85%);
+    text-align: center;
+    padding: 12.5em;
+}
+
+.example {
+    font-size: 1.5em;
+    font-weight: 500;
 }
 
 
