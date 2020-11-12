@@ -2,7 +2,7 @@ module.exports = function TheRoutes(waiters) {
 
     async function home(req, res, next) {
         try {
-            res.render("home", {})
+            res.render("home")
         } catch (err) {
             next(err);
         }
@@ -52,7 +52,7 @@ module.exports = function TheRoutes(waiters) {
             let days = req.body.day
 
             await waiters.waiterEntry(user);
-            await waiters.dayEntry(user, days)
+            // await waiters.dayEntry(user, days)
             await waiters.allNames()
             await waiters.returnNames()
             let allDays = await waiters.returnDays();
@@ -78,13 +78,10 @@ module.exports = function TheRoutes(waiters) {
     }
     async function admin(req, res, next) {
         try {
-            let selectedWeek = req.body.week
-
             let names = await waiters.returnNames();
 
             res.render("days", {
                 shifts: names,
-                week: selectedWeek
             })
         } catch (err) {
             next(err);

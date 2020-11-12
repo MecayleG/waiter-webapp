@@ -54,7 +54,7 @@ app.get("/waiters/:username", route.get);
 app.get("/days", route.admin);
 app.get("/reset", route.reset);
 
-const PORT = process.env.PORT || 3060;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);
